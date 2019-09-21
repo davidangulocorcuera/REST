@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import david.angulo.apirest.model.Post
 import kotlinx.android.synthetic.main.item_post.view.*
 
 class PostsListAdapter( var posts: ArrayList<Post> = ArrayList()) :

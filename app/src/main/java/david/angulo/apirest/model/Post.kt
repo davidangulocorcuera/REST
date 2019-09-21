@@ -1,4 +1,4 @@
-package david.angulo.apirest
+package david.angulo.apirest.model
 
 class Post(
     var name: String,
