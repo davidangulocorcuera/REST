@@ -10,10 +10,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import david.angulo.apirest.model.Post
 import david.angulo.apirest.PostsListAdapter
-
 import david.angulo.apirest.R
+import david.angulo.apirest.model.Post
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -26,7 +25,11 @@ class HomeFragment : Fragment() {
         ViewModelProviders.of(this).get(HomeViewModel()::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
@@ -34,11 +37,10 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initList()
         initializeViewModel()
-        homeViewModel.getAllPosts()
 
     }
 
-    private fun initList(){
+    private fun initList() {
         viewManager = LinearLayoutManager(context)
         postsAdapter = PostsListAdapter(posts)
         rvPosts.apply {
@@ -47,15 +49,15 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun initializeViewModel(){
-            homeViewModel.postsResponse.observe(this, Observer { chapters ->
-                chapters?.let {
-                    this.posts.clear()
-                    this.posts.addAll(it)
-                    postsAdapter.notifyDataSetChanged()
-                }
-            })
-    }
+    private fun initializeViewModel() {
+        homeViewModel.posts.observe(this, Observer { posts ->
+            posts?.let {
+                this.posts.clear()
+                this.posts.addAll(it)
+                postsAdapter.notifyDataSetChanged()
+            }
+        })
 
+    }
 
 }
