@@ -1,12 +1,9 @@
 package david.angulo.apirest.home
 
-import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import david.angulo.apirest.api.PostsRepository
-import david.angulo.apirest.model.Post
+import javax.inject.Inject
 
-class HomeViewModel  : ViewModel() {
+class HomeViewModel @Inject constructor()  : ViewModel() {
     val posts = PostsRepository.getAllPosts()
-
-
 }

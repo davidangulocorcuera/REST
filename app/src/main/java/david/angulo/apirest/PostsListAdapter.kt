@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import david.angulo.apirest.model.Post
 import kotlinx.android.synthetic.main.item_post.view.*
 
-class PostsListAdapter( var posts: ArrayList<Post> = ArrayList()) :
+class PostsListAdapter( var posts: ArrayList<Post> = ArrayList(), var onClick: (Post) -> Unit) :
     RecyclerView.Adapter<PostsListAdapter.PostViewHolder>() {
 
     inner class PostViewHolder(view: View) : RecyclerView.ViewHolder(view)
@@ -24,8 +24,14 @@ class PostsListAdapter( var posts: ArrayList<Post> = ArrayList()) :
     override fun getItemCount() = posts.size
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        holder.itemView.postsTitle.text = posts[position].title
-        holder.itemView.postsContent.text = posts[position].body
+
+        val current = posts[position]
+
+        holder.itemView.postsTitle.text = current.title
+        holder.itemView.postsContent.text = current.body
+        holder.itemView.setOnClickListener {
+            onClick(current)
+        }
     }
 
 }

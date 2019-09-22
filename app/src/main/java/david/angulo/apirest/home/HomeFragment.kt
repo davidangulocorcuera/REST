@@ -4,7 +4,9 @@ package david.angulo.apirest.home
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -42,7 +44,11 @@ class HomeFragment : Fragment() {
 
     private fun initList() {
         viewManager = LinearLayoutManager(context)
-        postsAdapter = PostsListAdapter(posts)
+        postsAdapter = PostsListAdapter(posts){post ->
+            view?.let{
+                showSnackbar(it,post.title)
+            }
+        }
         rvPosts.apply {
             layoutManager = viewManager
             adapter = postsAdapter
@@ -58,6 +64,15 @@ class HomeFragment : Fragment() {
             }
         })
 
+    }
+
+    private fun showSnackbar(view: View, text: String) {
+        context?.let { context ->
+            val snackbar = Snackbar.make(view, text, Snackbar.LENGTH_LONG)
+            snackbar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary))
+            snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.colorWhite))
+            snackbar.show()
+        }
     }
 
 }
