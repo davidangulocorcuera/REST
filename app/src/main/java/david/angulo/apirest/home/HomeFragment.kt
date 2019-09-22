@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
 import david.angulo.apirest.PokemonsListAdapter
 import david.angulo.apirest.R
 import david.angulo.apirest.model.Pokemon
@@ -44,9 +45,11 @@ class HomeFragment : Fragment() {
 
     private fun initList() {
         viewManager = LinearLayoutManager(context)
-        postsAdapter = PokemonsListAdapter(pokemons){ post ->
-            view?.let{
-                showSnackbar(it,post.name)
+        context?.let { context ->
+            postsAdapter = PokemonsListAdapter(pokemons, context){ post ->
+                view?.let{
+                    showSnackbar(it,post.name)
+                }
             }
         }
         rvPosts.apply {
@@ -73,6 +76,12 @@ class HomeFragment : Fragment() {
             snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.colorWhite))
             snackbar.show()
         }
+    }
+
+    private fun openWebView(url: String){
+        val webView = WebView(context)
+        webView.loadUrl(url)
+
     }
 
 }
