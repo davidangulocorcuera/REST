@@ -12,9 +12,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import david.angulo.apirest.PostsListAdapter
+import david.angulo.apirest.PokemonsListAdapter
 import david.angulo.apirest.R
-import david.angulo.apirest.model.Post
+import david.angulo.apirest.model.Pokemon
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -22,7 +22,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var postsAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
-    private var posts: ArrayList<Post> = ArrayList()
+    private var pokemons: ArrayList<Pokemon> = ArrayList()
     private val homeViewModel: HomeViewModel by lazy {
         ViewModelProviders.of(this).get(HomeViewModel()::class.java)
     }
@@ -44,9 +44,9 @@ class HomeFragment : Fragment() {
 
     private fun initList() {
         viewManager = LinearLayoutManager(context)
-        postsAdapter = PostsListAdapter(posts){post ->
+        postsAdapter = PokemonsListAdapter(pokemons){ post ->
             view?.let{
-                showSnackbar(it,post.title)
+                showSnackbar(it,post.name)
             }
         }
         rvPosts.apply {
@@ -56,10 +56,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun initializeViewModel() {
-        homeViewModel.posts.observe(this, Observer { posts ->
-            posts?.let {
-                this.posts.clear()
-                this.posts.addAll(it)
+        homeViewModel.pokemonResponse.observe(this, Observer { pokemonResponse ->
+            pokemonResponse?.let {
+                this.pokemons.clear()
+                this.pokemons.addAll(it.results)
                 postsAdapter.notifyDataSetChanged()
             }
         })
